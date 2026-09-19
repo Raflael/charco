@@ -1,0 +1,224 @@
+/* ---------------------------------------------------------------------------
+   PRANCHA DE HISTORIA NATURAL
+   Papel, tinta ferro-galha, terras queimadas. Referencia: as estampas de
+   Haeckel e o caderno de campo de um naturalista — nao um painel de controle.
+   Regra da casa: nenhum pigmento fora da faixa das terras, nenhum canto
+   arredondado que nao exista em papel, e versalete no lugar de caixa alta.
+--------------------------------------------------------------------------- */
+:root{
+  --papel:#e9e1cb;
+  --papel2:#e3daC0;
+  --papel3:#dcd1b2;
+  --vinco:#c6b795;
+  --vinco2:#b3a17c;
+  --tinta:#2c2620;
+  --tinta2:#6b6050;
+  --tinta3:#8c806c;
+  --sepia:#7c5a33;
+  --oxido:#9b4626;
+  --ocre:#b2842b;
+  --oliva:#6c7838;
+  --agua:#c8c5a6;
+
+  --serif:Georgia,"Palatino Linotype","Book Antiqua",Palatino,serif;
+  --mono:"Cascadia Mono",Consolas,ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;display:flex;background:var(--papel);color:var(--tinta);
+  font:14px/1.5 var(--serif);overflow:hidden;
+}
+
+/* ---------- o charco ---------- */
+#palco{flex:1;position:relative;min-width:0;background:var(--papel3)}
+#mundo{display:block;width:100%;height:100%;cursor:crosshair}
+#dica{
+  position:absolute;left:16px;bottom:13px;color:var(--tinta2);font-size:12px;
+  font-style:italic;pointer-events:none;transition:opacity .4s;
+}
+
+/* ---------- a prancha ---------- */
+#painel{
+  width:336px;flex:none;overflow-y:auto;padding:20px 18px 40px;
+  background:var(--papel2);
+  border-left:1px solid var(--vinco2);
+  /* pauta de caderno, quase imperceptivel */
+  background-image:repeating-linear-gradient(
+    to bottom, rgba(140,128,108,.055) 0 1px, transparent 1px 26px);
+  box-shadow:inset 3px 0 6px -4px rgba(60,48,32,.45);
+}
+#painel header{border-bottom:2px solid var(--tinta);padding-bottom:9px}
+#painel header h1{
+  margin:0;font:400 27px/1 var(--serif);letter-spacing:.20em;
+  font-variant:small-caps;color:var(--tinta);
+}
+#painel .sub{margin:4px 0 0;color:var(--tinta2);font-size:12px;font-style:italic}
+
+#painel section{margin-top:24px}
+#painel h2{
+  margin:0 0 10px;font:400 13px/1 var(--serif);font-variant:small-caps;
+  letter-spacing:.13em;color:var(--sepia);
+  border-bottom:1px solid var(--vinco);padding-bottom:5px;
+}
+
+/* ---------- medidas ---------- */
+.placar{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:16px}
+.placar div{
+  background:var(--papel);border:1px solid var(--vinco);padding:8px 3px;text-align:center;
+}
+.placar b{display:block;font:400 17px/1.15 var(--mono);color:var(--sepia)}
+.placar span{font-size:10px;color:var(--tinta2);font-style:italic}
+
+.barra{
+  display:grid;grid-template-columns:78px 1fr 40px;align-items:center;gap:9px;
+  margin-bottom:6px;font-size:11.5px;font-style:italic;color:var(--tinta2);
+}
+.barra .trilho{height:8px;background:var(--papel);border:1px solid var(--vinco)}
+.barra i{display:block;height:100%;background:var(--oliva);transition:width .25s}
+.barra em{font:11px var(--mono);color:var(--tinta);font-style:normal;text-align:right}
+
+#grafico,#arvore,#rede{
+  width:100%;height:auto;display:block;
+  background:var(--papel);border:1px solid var(--vinco);
+}
+#grafico{height:120px}
+#legenda{
+  display:flex;flex-wrap:wrap;gap:9px;margin-top:7px;font-size:10px;
+  color:var(--tinta2);font-style:italic;
+}
+#legenda span::before{
+  content:"";display:inline-block;width:10px;height:2px;margin-right:4px;
+  vertical-align:middle;background:currentColor;
+}
+
+/* ---------- instrumentos ---------- */
+label{
+  display:block;margin-bottom:13px;font-size:11px;color:var(--tinta2);
+  font-variant:small-caps;letter-spacing:.09em;
+}
+label output{color:var(--oxido);font-family:var(--mono);font-variant:normal}
+input[type=range]{width:100%;margin-top:5px;accent-color:var(--sepia)}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+button{
+  background:var(--papel);color:var(--tinta);border:1px solid var(--vinco2);
+  padding:5px 11px;font:12px var(--serif);cursor:pointer;transition:.14s;
+}
+button:hover{background:#f0e9d6;border-color:var(--sepia);color:var(--sepia)}
+button.on{
+  background:var(--sepia);border-color:var(--sepia);color:var(--papel);
+  font-style:italic;
+}
+button.perigo:hover{border-color:var(--oxido);color:var(--oxido)}
+
+/* ---------- fichas ---------- */
+#ficha,#ficha-esp{
+  border:1px solid var(--vinco);padding:12px;background:var(--papel);
+  box-shadow:1px 1px 0 var(--vinco);
+}
+#ficha-esp{margin-top:10px}
+#ficha h2{margin-bottom:9px}
+#f-id{color:var(--oxido);font-family:var(--mono)}
+#ficha-esp h3{
+  margin:0 0 7px;font:400 14px var(--serif);font-style:italic;color:var(--oxido);
+}
+#f-corpo{font-size:11.5px}
+.par{display:flex;justify-content:space-between;gap:10px;padding:2px 0;
+  border-bottom:1px dotted var(--vinco)}
+.par span:first-child{color:var(--tinta2);font-style:italic}
+.par span:last-child{font-family:var(--mono);color:var(--tinta)}
+#f-corpo .par{display:flex;justify-content:space-between;gap:10px;padding:2px 0;
+  border-bottom:1px dotted var(--vinco)}
+#f-corpo .par span:last-child{font-family:var(--mono);color:var(--tinta)}
+#f-corpo .par span:first-child{color:var(--tinta2);font-style:italic}
+
+.nota{margin:8px 0 0;font-size:10.5px;line-height:1.5;color:var(--tinta3);
+  font-style:italic}
+
+/* ---------- catalogo de especies ---------- */
+.cont{color:var(--tinta3);letter-spacing:0;font-variant:normal;font-size:11px}
+.taxa{list-style:none;margin:0;padding:0;max-height:172px;overflow-y:auto}
+.taxa li{
+  display:flex;align-items:center;gap:8px;padding:4px 4px;font-size:11.5px;
+  cursor:pointer;border-bottom:1px dotted var(--vinco);
+}
+.taxa li:hover{background:rgba(255,250,235,.7)}
+.taxa li.sel{background:var(--papel);outline:1px solid var(--sepia)}
+.taxa .bolha{width:9px;height:9px;border-radius:50%;flex:none;
+  border:1px solid rgba(43,38,32,.45)}
+.taxa .nome{flex:1;font-style:italic;color:var(--tinta);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.taxa .qt{font-family:var(--mono);color:var(--tinta2);font-size:10px}
+.taxa li.morta .nome{color:var(--tinta3)}
+.taxa li.morta .bolha{opacity:.45}
+
+/* ---------- diario ---------- */
+#eventos{list-style:none;margin:0;padding:0;font-size:11.5px;color:var(--tinta2);
+  max-height:150px;overflow-y:auto}
+#eventos li{padding:4px 0;border-bottom:1px dotted var(--vinco);font-style:italic}
+#eventos li b{color:var(--oxido);font-family:var(--mono);font-weight:400;
+  font-style:normal;margin-right:5px}
+
+/* ---------- papel tem barra de rolagem discreta ---------- */
+#painel::-webkit-scrollbar,.taxa::-webkit-scrollbar,#eventos::-webkit-scrollbar{width:9px}
+#painel::-webkit-scrollbar-track,.taxa::-webkit-scrollbar-track,
+#eventos::-webkit-scrollbar-track{background:var(--papel3)}
+#painel::-webkit-scrollbar-thumb,.taxa::-webkit-scrollbar-thumb,
+#eventos::-webkit-scrollbar-thumb{background:var(--vinco2);border:2px solid var(--papel3)}
+
+@media (max-width:900px){
+  body{flex-direction:column;overflow:auto}
+  #palco{height:52vh}
+  #painel{width:100%;border-left:0;border-top:1px solid var(--vinco2)}
+}
+
+/* ---------------------------------------------------------------------------
+   SELECOES
+   Escolha unica nao e' um botao: e' um item marcado a tinta numa lista,
+   como a legenda de uma prancha. Acao e' etiqueta de herbario, que afunda
+   quando pressionada. E medida se le' em regua graduada, nao em barrinha.
+--------------------------------------------------------------------------- */
+.escolha{display:grid;grid-template-columns:1fr 1fr;gap:1px 12px}
+.escolha button{
+  background:none;border:0;box-shadow:none;padding:3px 0;text-align:left;
+  font:13px/1.3 var(--serif);color:var(--tinta2);
+  display:flex;align-items:center;gap:8px;
+}
+.escolha button::before{
+  content:"";width:11px;height:11px;flex:none;border-radius:50%;
+  border:1px solid var(--tinta2);background:transparent;transition:.14s;
+}
+.escolha button:hover{background:none;color:var(--sepia)}
+.escolha button:hover::before{border-color:var(--sepia)}
+.escolha button.on{color:var(--tinta);font-style:italic;background:none}
+.escolha button.on::before{
+  border-color:var(--oxido);
+  background:radial-gradient(circle at 50% 50%, var(--oxido) 0 46%, transparent 48%);
+}
+
+.acoes button{
+  border:1px solid var(--tinta2);box-shadow:1.5px 1.5px 0 var(--vinco2);
+  padding:4px 10px;font:11.5px var(--serif);font-variant:small-caps;
+  letter-spacing:.07em;
+}
+.acoes button:hover{transform:translate(1px,1px);box-shadow:.5px .5px 0 var(--vinco2)}
+.acoes button.on{background:var(--sepia);color:var(--papel);border-color:var(--tinta)}
+
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:19px;
+  background:transparent;margin-top:1px;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{
+  height:13px;
+  background:
+    repeating-linear-gradient(to right, var(--vinco2) 0 1px, transparent 1px 10%)
+      bottom/100% 6px no-repeat,
+    linear-gradient(var(--tinta2), var(--tinta2)) bottom/100% 1px no-repeat;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:9px;height:17px;margin-top:-4px;
+  background:var(--oxido);border:1px solid var(--tinta);
+  clip-path:polygon(50% 0, 100% 32%, 100% 100%, 0 100%, 0 32%);
+}
+input[type=range]::-moz-range-track{height:1px;background:var(--tinta2)}
+input[type=range]::-moz-range-thumb{width:9px;height:17px;border-radius:0;
+  background:var(--oxido);border:1px solid var(--tinta)}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charco — ecossistema vivo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="palco">
+  <canvas id="mundo"></canvas>
+  <div id="dica">clique numa criatura para inspecionar</div>
+</main>
+
+<aside id="painel">
+  <header>
+    <h1>Charco</h1>
+    <p class="sub">seleção natural rodando ao vivo</p>
+  </header>
+
+  <section class="placar">
+    <div><b id="v-pop">0</b><span>criaturas</span></div>
+    <div><b id="v-gen">0</b><span>geração</span></div>
+    <div><b id="v-food">0</b><span>comida</span></div>
+    <div><b id="v-fps">0</b><span>fps</span></div>
+  </section>
+
+  <section>
+    <h2>traços médios</h2>
+    <div id="barras"></div>
+  </section>
+
+  <section>
+    <h2>história da população</h2>
+    <canvas id="grafico" width="300" height="120"></canvas>
+    <div id="legenda"></div>
+  </section>
+
+  <section id="ficha" hidden>
+    <h2>espécime <span id="f-id"></span></h2>
+    <div id="f-corpo"></div>
+    <canvas id="rede" width="300" height="150"></canvas>
+    <p class="nota" id="rede-nota"></p>
+  </section>
+
+  <section>
+    <h2>leis do charco</h2>
+    <label>fartura <output id="o-food">32</output>
+      <input id="s-food" type="range" min="0" max="70" value="32" step="1"></label>
+    <label>mutação <output id="o-mut">5.5</output>%
+      <input id="s-mut" type="range" min="0" max="20" value="5.5" step="0.5"></label>
+    <label>tempo <output id="o-vel">1</output>×
+      <input id="s-vel" type="range" min="0" max="5" value="0" step="1"></label>
+  </section>
+
+  <section>
+    <h2>quem decide</h2>
+    <div class="escolha" id="modo-cerebro">
+      <button data-cerebro="regras" class="on">regras</button>
+      <button data-cerebro="neural">rede neural</button>
+    </div>
+    <p class="nota">a rede vive no genoma desde o primeiro instante — trocar aqui
+       muda quem toma a decisão, sem reiniciar o charco</p>
+  </section>
+
+  <section>
+    <h2>cor mostra</h2>
+    <div class="escolha" id="modo-cor">
+      <button data-modo="linhagem" class="on">linhagem</button>
+      <button data-modo="dieta">dieta</button>
+      <button data-modo="tamanho">tamanho</button>
+      <button data-modo="idade">idade</button>
+      <button data-modo="especie">espécie</button>
+      <button data-modo="toxina">veneno</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>intervir</h2>
+    <div class="chips acoes">
+      <button id="b-seca">seca</button>
+      <button id="b-praga">praga</button>
+      <button id="b-invasao">invasão</button>
+      <button id="b-deriva">deriva</button>
+      <button id="b-rastro">rastros</button>
+      <button id="b-som">som</button>
+      <button id="b-pausa">pausar</button>
+      <button id="b-reset" class="perigo">reiniciar</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>espécies vivas <span id="conta-esp" class="cont"></span></h2>
+    <ul id="lista-esp" class="taxa"></ul>
+    <div id="ficha-esp" hidden></div>
+  </section>
+
+  <section>
+    <h2>árvore da vida</h2>
+    <canvas id="arvore" width="300" height="210"></canvas>
+    <p class="nota">cada linha é uma espécie ao longo do tempo; a ramificação é
+       o instante em que duas populações deixaram de conseguir cruzar</p>
+  </section>
+
+  <section>
+    <h2>museu <span id="conta-foss" class="cont"></span></h2>
+    <ul id="lista-foss" class="taxa"></ul>
+  </section>
+
+  <section>
+    <h2>diário</h2>
+    <ul id="eventos"></ul>
+  </section>
+</aside>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

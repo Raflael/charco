@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Charco — prancha de espécimes</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body{display:block;overflow:auto;padding:26px 30px}
+  h1{font:400 26px Georgia,serif;font-variant:small-caps;letter-spacing:.16em;margin:0}
+  p.sub{font-style:italic;color:var(--tinta2);margin:3px 0 20px}
+  .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  figure{margin:0;border:1px solid var(--vinco);background:var(--papel);
+    box-shadow:1.5px 1.5px 0 var(--vinco2);padding:10px}
+  figcaption{font:italic 12px Georgia,serif;color:var(--tinta);margin-top:6px;
+    border-top:1px dotted var(--vinco);padding-top:5px}
+  figcaption b{display:block;font-style:normal;font-size:10px;color:var(--tinta2);
+    font-weight:400;letter-spacing:.04em}
+  canvas{display:block;width:100%;height:auto;background:#c8c5a6}
+</style>
+</head>
+<body>
+<h1>Prancha de espécimes</h1>
+<p class="sub">cada corpo desenhado a partir do genoma — ferramenta para iterar a arte sem esperar a evolução</p>
+<div class="grade" id="grade"></div>
+
+<script type="module">
+import { Creature } from './js/creature.js';
+import { randomGenome } from './js/genome.js';
+import { desenharCriatura } from './js/corpo.js';
+
+// Espécimes escolhidos para exercitar cada traço até o extremo.
+const CASOS = [
+  ['tipo comum',        { size:0.6, speed:0.5, sense:0.45, diet:0.1, aggression:0.2 }],
+  ['veloz, cauda longa',{ size:0.5, speed:1.5, sense:0.5,  diet:0.1, aggression:0.2 }],
+  ['grande, carapaça',  { size:2.0, speed:0.3, sense:0.4,  diet:0.15, aggression:0.2 }],
+  ['predador',          { size:1.3, speed:0.9, sense:0.8,  diet:0.95, aggression:0.8 }],
+  ['vigilante',         { size:0.7, speed:0.5, sense:1.45, diet:0.1, aggression:0.2 }],
+  ['cego, mínimo',      { size:0.3, speed:0.4, sense:0.07, diet:0.05, aggression:0.1 }],
+  ['espinhoso',         { size:1.1, speed:0.6, sense:0.5,  diet:0.3, aggression:1.0 }],
+  ['enfeitado',         { size:0.8, speed:0.7, sense:0.6,  diet:0.1, aggression:0.2, ornamento:0.95 }],
+  ['venenoso',          { size:0.7, speed:0.6, sense:0.5,  diet:0.1, aggression:0.2, toxina:0.9 }],
+  ['no cio',            { size:0.9, speed:0.6, sense:0.6,  diet:0.1, aggression:0.3, _cio:true }]
+];
+
+const grade = document.getElementById('grade');
+const ESCALA = 7;
+
+for (const [nome, ajustes] of CASOS) {
+  const g = randomGenome();
+  for (const k in ajustes) if (!k.startsWith('_')) g[k] = ajustes[k];
+  g.hue = 40 + Math.random() * 60;
+
+  const c = new Creature(0, 0, g, 100);
+  c.age = 12;
+  if (ajustes._cio) { c.pronta = 3; c.energy = c.reproAt * 0.95; }
+
+  const fig = document.createElement('figure');
+  const cv = document.createElement('canvas');
+  const L = 220, A = 150;
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  cv.width = L * dpr; cv.height = A * dpr;
+  cv.style.aspectRatio = L + '/' + A;
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.fillStyle = '#c8c5a6';
+  ctx.fillRect(0, 0, L, A);
+
+  ctx.save();
+  ctx.translate(L / 2, A / 2);
+  ctx.scale(ESCALA, ESCALA);
+  c.x = 0; c.y = 0; c.angle = 0;
+  desenharCriatura(ctx, c);
+  ctx.restore();
+
+  fig.appendChild(cv);
+  const cap = document.createElement('figcaption');
+  cap.innerHTML = nome + '<b>tam ' + g.size.toFixed(2) + ' · vel ' + g.speed.toFixed(2) +
+    ' · vis ' + g.sense.toFixed(2) + ' · dieta ' + g.diet.toFixed(2) +
+    ' · agr ' + g.aggression.toFixed(2) + '</b>';
+  fig.appendChild(cap);
+  grade.appendChild(fig);
+}
+</script>
+</body>
+</html>

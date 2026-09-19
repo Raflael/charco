@@ -1,0 +1,9 @@
+# capturas e rascunhos de sessao
+_*.png
+_*.mjs
+_*.cjs
+*.log
+
+# lixo de sistema
+Thumbs.db
+desktop.ini
