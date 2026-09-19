@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Charco — gerador do banner</title>
+<style>
+  html,body{margin:0;padding:0;background:#e9e1cb;overflow:hidden}
+  canvas{display:block}
+</style>
+</head>
+<body>
+<canvas id="b" width="1280" height="360"></canvas>
+
+<script type="module">
+import { Creature } from './js/creature.js';
+import { randomGenome } from './js/genome.js';
+import { desenharCriatura } from './js/corpo.js';
+
+// Banner do repositorio: o charco visto de cima, com o titulo gravado por
+// cima. Os bichos NAO sao arte de banner — sao as mesmas criaturas que o
+// simulador desenha, cada uma a partir de um genoma.
+const cv = document.getElementById('b');
+const ctx = cv.getContext('2d');
+const L = cv.width, A = cv.height;
+
+// ---- a agua, com o gradiente do clima ----
+ctx.fillStyle = '#c8c5a6';
+ctx.fillRect(0, 0, L, A);
+const clima = ctx.createLinearGradient(0, 0, 0, A);
+clima.addColorStop(0, 'rgba(92,116,128,.34)');
+clima.addColorStop(0.5, 'rgba(190,180,150,0)');
+clima.addColorStop(1, 'rgba(158,106,44,.34)');
+ctx.fillStyle = clima;
+ctx.fillRect(0, 0, L, A);
+
+// manchas ferteis
+for (const p of [[170, 250], [520, 90], [900, 280], [1160, 130]]) {
+  const g = ctx.createRadialGradient(p[0], p[1], 0, p[0], p[1], 240);
+  g.addColorStop(0, 'rgba(108,120,56,.20)');
+  g.addColorStop(1, 'rgba(108,120,56,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(p[0] - 250, p[1] - 250, 500, 500);
+}
+
+// comida
+let semente = 7;
+const rnd = () => (semente = (semente * 16807) % 2147483647) / 2147483647;
+ctx.fillStyle = '#6c7838';
+for (let i = 0; i < 90; i++) ctx.fillRect(rnd() * L, rnd() * A, 3, 3);
+ctx.fillStyle = '#9b4626';
+for (let i = 0; i < 10; i++) ctx.fillRect(rnd() * L, rnd() * A, 4, 4);
+
+// ---- o elenco: um de cada tipo que o mundo produz ----
+const ELENCO = [
+  [ 148,  96, 3.2, -0.22, { size:1.5, speed:0.45, sense:0.55, diet:0.15, aggression:0.25, hue: 44 }],
+  [ 300, 240, 2.8,  0.35, { size:0.9, speed:1.30, sense:0.50, diet:0.10, aggression:0.20, hue: 92 }],
+  [ 480, 120, 2.2, -0.55, { size:0.7, speed:0.60, sense:1.35, diet:0.10, aggression:0.15, hue: 18 }],
+  [ 690, 285, 3.0,  0.20, { size:1.2, speed:0.85, sense:0.75, diet:0.95, aggression:0.85, hue:340 }],
+  [ 862, 104, 2.5, -0.18, { size:1.0, speed:0.60, sense:0.60, diet:0.20, aggression:1.00, hue:210 }],
+  [1035, 262, 2.7,  0.30, { size:0.9, speed:0.70, sense:0.65, diet:0.12, aggression:0.20,
+                            ornamento:0.48, hue:130 }],
+  [1168,  84, 1.8, -0.35, { size:0.45, speed:0.9, sense:0.35, diet:0.08, aggression:0.15, hue: 70 }],
+  [ 200, 320, 1.7,  0.15, { size:0.4, speed:0.55, sense:0.30, diet:0.05, aggression:0.10, hue:160 }]
+];
+
+for (const [x, y, escala, ang, ajustes] of ELENCO) {
+  const g = randomGenome();
+  for (const k in ajustes) g[k] = ajustes[k];
+  const c = new Creature(0, 0, g, 100);
+  c.age = 20;
+  c.x = 0; c.y = 0; c.angle = 0;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(ang);
+  ctx.scale(escala, escala);
+  desenharCriatura(ctx, c, 1);
+  ctx.restore();
+}
+
+// ---- a cartela do titulo, como a etiqueta colada numa prancha ----
+const cw = 560, ch = 138, cxx = (L - cw) / 2, cyy = (A - ch) / 2;
+ctx.fillStyle = 'rgba(233,225,203,.90)';
+ctx.fillRect(cxx, cyy, cw, ch);
+ctx.strokeStyle = '#2c2620';
+ctx.lineWidth = 2;
+ctx.strokeRect(cxx, cyy, cw, ch);
+ctx.strokeStyle = 'rgba(44,38,32,.45)';
+ctx.lineWidth = 0.8;
+ctx.strokeRect(cxx + 6, cyy + 6, cw - 12, ch - 12);
+
+ctx.textAlign = 'center';
+ctx.fillStyle = '#2c2620';
+ctx.font = '400 62px Georgia, "Palatino Linotype", serif';
+ctx.letterSpacing = '14px';
+ctx.fillText('CHARCO', L / 2 + 7, cyy + 68);
+ctx.letterSpacing = '0px';
+
+ctx.fillStyle = '#7c5a33';
+ctx.font = 'italic 17px Georgia, serif';
+ctx.fillText('a evolução rodando ao vivo no navegador', L / 2, cyy + 98);
+
+ctx.fillStyle = '#6b6050';
+ctx.font = '11px "Cascadia Mono", Consolas, monospace';
+ctx.fillText('espécies · filogenia · deriva continental · mimetismo', L / 2, cyy + 120);
+
+// ---- moldura da prancha ----
+ctx.strokeStyle = 'rgba(44,38,32,.55)';
+ctx.lineWidth = 3;
+ctx.strokeRect(1.5, 1.5, L - 3, A - 3);
+</script>
+</body>
+</html>

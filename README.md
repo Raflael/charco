@@ -1,12 +1,24 @@
-# Charco
+<p align="center">
+  <img src="docs/banner.png" alt="Charco — a evolução rodando ao vivo no navegador">
+</p>
 
-**Um ecossistema onde a evolução roda ao vivo, no navegador, sem nenhuma dependência.**
+<p align="center">
+  <img src="https://img.shields.io/badge/dependências-zero-7c5a33?style=flat-square" alt="zero dependências">
+  <img src="https://img.shields.io/badge/build-nenhum-9b4626?style=flat-square" alt="sem build">
+  <img src="https://img.shields.io/badge/JavaScript-ES%20modules-6c7838?style=flat-square" alt="ES modules">
+  <img src="https://img.shields.io/badge/licença-MIT-6b6050?style=flat-square" alt="MIT">
+</p>
 
 Criaturas têm genoma, gastam energia, caçam, escolhem parceiro, se reproduzem com
 recombinação e morrem. Ninguém programou predador, herbívoro, migração, espécie,
 aviso de veneno — nem o corpo dos bichos. Tudo isso **emerge**, e fica registrado.
 
-![O charco rodando](docs/charco.png)
+**[O que emerge](#o-que-acontece-sem-ninguém-mandar)** ·
+[O corpo é o genoma](#o-corpo-é-o-genoma) ·
+[As leis do modelo](#as-leis-que-impedem-o-modelo-de-degenerar) ·
+[O que NÃO emergiu](#o-que-não-emergiu) ·
+[Arquitetura](#arquitetura) ·
+[Estética](#estética)
 
 ---
 
@@ -22,6 +34,12 @@ aviso de veneno — nem o corpo dos bichos. Tudo isso **emerge**, e fica registr
  956s  MIMETISMO: os inofensivos copiaram a cor de quem é venenoso
 1095s  APOSEMATISMO: os tóxicos convergiram todos para a mesma cor
 ```
+
+![O charco rodando](docs/charco.png)
+
+<p align="center"><i>O painel inteiro é uma prancha: traços médios, história da
+população, ficha do espécime com o cérebro dele desenhado, catálogo de espécies
+vivas, árvore da vida, museu de fósseis e o diário.</i></p>
 
 ## Rodar
 
@@ -298,3 +316,11 @@ Haeckel e caderno de campo, não painel de controle.
   científica do círculo colorido de infográfico
 - escolha única não é botão, é item marcado a tinta; medida se lê em régua
   graduada; versalete no lugar de caixa alta
+
+---
+
+<p align="center">
+  <sub>Feito por <b>Rafael Medeiros</b> — biólogo de formação, desenvolvedor por ofício.<br>
+  O banner e a prancha de espécimes são desenhados pelo próprio simulador:
+  <code>banner.html</code> e <code>prancha.html</code>.</sub>
+</p>
